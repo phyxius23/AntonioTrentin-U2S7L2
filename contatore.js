@@ -2,20 +2,18 @@
  * Crea un contatore che tenga conto del tempo che passa, utilizzando sessionStorage. Aggiornando la pagina 
  * il valore prosegue, chiudendo la pagina - ovviamente - ricomincia. Il valore del contatore deve 
  * aggiornarsi ad ogni secondo.
- * 1. salvo i secondi trascorsi dal 1970 ad ora in session storage
- * 2. salvo i secondi trascorsi dal ad ora ogni 1000ms in una variabile che per differenza mi restituisce i 
- * secondi trascorsi dall'avvio del timer
- * 3. questo sopra lo faccio tramite setInterval
  */
 
-const todayLocal = new Date();
-const secondsTodayLocal = Date.parse(todayLocal);
-localStorage.setItem("secondsNow", secondsTodayLocal);
+document.addEventListener('DOMContentLoaded', () => {
+   let showCounter = document.querySelector('#counter');
+   let counter = parseInt(sessionStorage.getItem("counter")) || 0;
 
-setInterval(function () {
-   const today = new Date();
-   let test = Date.parse(today);
+   setInterval(() => {
+      counter++;
+   
+      sessionStorage.setItem("counter", counter);
 
-   sessionStorage.setItem("secondsNow", test);
-   console.log((sessionStorage.getItem("secondsNow") - localStorage.getItem("secondsNow"))/1000);
-}, 1000);
+      showCounter.innerHTML = counter;
+   }, 1000)
+   
+})
